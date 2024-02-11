@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development .">
+    <meta name="author" content="Devcrud">
+    <title>{{user.firstName}} page</title>
+    <!-- font icons -->
+    <link rel="stylesheet" href="../../../assets/profile/vendors/themify-icons/css/themify-icons.css">
+    <!-- Bootstrap + JohnDoe main styles -->
+	<link rel="stylesheet" href="../../../assets/profile/css/johndoe.css">
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+  
+    <!-- app-navbar -->
+
+    <app-navbar></app-navbar>
+
+  <!-- ***** Header Area End ***** -->
+    <br><br><br><br>
+    @if(user!=null){
+    <!-- header  -->
+    <header class="header">
+        <div class="container">
+            <ul class="social-icons pt-3">
+                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-facebook" aria-hidden="true"></i></a></li>
+                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-twitter" aria-hidden="true"></i></a></li>
+                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-github" aria-hidden="true"></i></a></li>
+            </ul>  
+            <div class="header-content">
+                <h4 class="header-subtitle" >Hello, I am</h4>
+                        <h1 class="header-title">{{user.firstName}}</h1>
+                <h6 class="header-mono" >Frond-end Designer | Back-end Developer</h6>
+                    <a class="btn btn-primary btn-rounded "  href="/userProfile#userResume">See Resume....</a>
+            </div>
+        </div>
+    </header> 
+    <!-- header end  -->
+
+    <!-- navbar  start-->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white" data-spy="affix" data-offset-top="510">
+        <div class="container">
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse mt-sm-20 navbar-collapse" id="navbarSupportedContent">
+              
+                <ul class="navbar-nav brand">
+                    <img src="../../../assets/profile/imgs/avatar2.png" alt="" class="brand-img">
+                    <li class="brand-txt">
+                        <h5 class="brand-title">{{user.firstName}}</h5>
+                        <div class="brand-subtitle">Web Designer | Developer</div>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+    <!-- navbar end  -->
+
+    <!-- section -->
+    <div class="container-fluid">
+        <div id="userResume" class="row about-section">
+            <div class="col-lg-4 about-card">
+                <h3 class="font-weight-light">Who am I ?</h3>
+                <span class="line mb-5"></span>
+                <h5 class="mb-3">A Web Designer / Developer Located In Our Lovely Earth</h5>
+                <p class="mt-20">"Designing the website in such a way that it looks visually appealing by selecting the layout, graphics and images."</p>
+            </div>
+            <div class="col-lg-4 about-card">
+                @if(!submitted){
+                <h3 class="font-weight-light">Personal Info</h3>
+                <span class="line mb-5"></span>
+                <ul class="mt40 info list-unstyled">
+                    @if(user.authorities[0].authority == "Admin"){
+                        <li><span>User Id</span> : {{user.userId}}</li>
+                        <li><span>Full Name</span> : {{user.firstName}} {{user.lastName}}</li>
+                        <li><span>Email</span> : {{user.email}}</li>
+                        
+                    }@else if(user.authorities[0].authority == "User") {
+                        <li><span>User Id</span> : {{user.userId}}</li>
+                        <li><span>Full Name</span> : {{user.firstName}} {{user.lastName}}</li>
+                        <li><span>Email</span> : {{user.email}}</li>
+                        <li><span>Birthdate</span> : {{user.dob}}</li>
+                        <li><span>Phone</span> : + (91) {{user.mobile}}</li>
+                        <li><span>Address</span> :  {{user.currentLocation}},{{user.country}}</li>
+                    }
+                </ul>
+                <button class="btn btn-outline-danger" (click)="submitted=true"><i class="icon-down-circled2 "></i>Edit Profile</button>
+            }
+
+                @if(submitted)
+                {  
+                <h3 class="font-weight-light">Personal Info</h3>
+                <span class="line mb-5"></span>
+                <ul class="mt40 info list-unstyled">
+
+                <form [formGroup]="editProfileForm"  class="was-validated" (submit)="onSubmit()"  autocomplete="on" method="POST">
+                    <fieldset disabled>
+                    <div class="form-group" >
+                        <li><span>User Id</span> : </li>
+                       <input type="text" class="form-control"  required  formControlName="userId">
+                    </div>
+                </fieldset>
+                    <div class="form-group">
+                        <li><span>first Name</span> : </li>
+                       <input type="text" class="form-control" required formControlName="firstName">
+                    </div>
+                    <div class="form-group">
+                        <li><span>Middle Name</span> : </li>
+                       <input type="text" class="form-control"  formControlName="middleName">
+                    </div>
+                    <div class="form-group">
+                        <li><span>Last Name</span> : </li>
+                       <input type="text" class="form-control" required formControlName="lastName">
+                    </div>
+                    <div class="form-group">
+                        <li><span>Email</span> : </li> 
+                       <input type="email" class="form-control"  required formControlName="email">
+                    </div>
+                    <div class="form-group">
+                        <li><span>password</span> : </li> 
+                       <input type="text" class="form-control form-control is-valid"  placeholder="Enter your password" required formControlName="password">
+                       <div class="invalid-feedback">Please enter the Password.</div>
+                     
+                    </div>
+
+                    <div class="form-group">
+                        <li><span>Birthdate</span> : </li>
+                       <input type="text" class="form-control" required formControlName="dob" >
+                    </div>
+                    <div class="form-group">
+                       <li><span>Gender</span> : </li>
+                       <input type="text" class="form-control"  required formControlName="gender">
+                    </div>
+                    <div class="form-group">
+                        <li><span>Country</span> : </li>
+                       <input type="text" class="form-control"  required  formControlName="country">
+                    </div>
+                    <div class="form-group">
+                        <li><span>Current Location</span> : </li>
+                       <input type="text" class="form-control" required formControlName="currentLocation">
+                    </div>
+                    <div class="form-group">
+                        <li><span>Prefered Location</span> : </li>
+                       <input type="text" class="form-control" required formControlName="prefered_location">
+                    </div>
+                    <div class="form-group">
+                        <li><span>Mobile</span> : 
+                       <input type="number" class="form-control" required formControlName="mobile"></li>
+                    </div>
+                    <button type="submit"  [disabled]="editProfileForm.invalid" class="btn btn-primary">Update</button>
+                   </form>
+
+                </ul>
+            }
+
+                <ul class="social-icons pt-3">
+                    <li class="social-item"><a class="social-link" href="#"><i class="ti-facebook" aria-hidden="true"></i></a></li>
+                    <li class="social-item"><a class="social-link" href="#"><i class="ti-twitter" aria-hidden="true"></i></a></li>
+                    <li class="social-item"><a class="social-link" href="#"><i class="ti-google" aria-hidden="true"></i></a></li>
+                </ul>  
+            </div>
+            <div class="col-lg-4 about-card">
+                <h3 class="font-weight-light">My Expertise</h3>
+                <span class="line mb-5"></span>
+                <div class="row">
+                    <div class="col-1 text-danger pt-1"><i class="ti-widget icon-lg"></i></div>
+                    <div class="col-10 ml-auto mr-3">
+                        <h6>UX Design</h6>
+                        <!-- <p class="subtitle"> exercitat Repellendus,  corrupt.</p> -->
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1 text-danger pt-1"><i class="ti-paint-bucket icon-lg"></i></div>
+                    <div class="col-10 ml-auto mr-3">
+                        <h6>Web Development</h6>
+                        <!-- <p class="subtitle">Lorem ipsum dolor sit consectetur.</p> -->
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1 text-danger pt-1"><i class="ti-stats-up icon-lg"></i></div>
+                    <div class="col-10 ml-auto mr-3">
+                        <h6>Digital Marketing</h6>
+                        <!-- <p class="subtitle">voluptate commodi illo voluptatib.</p> -->
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- section end -->
+
+}@else {
+    <h1>User not accessible....</h1>
+}
+    <app-footer></app-footer>
+
+
+
+
+
+
+
+
+
+
+	<!-- core  -->
+    <script src="../../../assets/profile/vendors/jquery/jquery-3.4.1.js"></script>
+    <script src="../../../assets/profile/vendors/bootstrap/bootstrap.bundle.js"></script>
+
+    <!-- bootstrap 3 affix -->
+    <script src="../../../assets/profile/vendors/bootstrap/bootstrap.affix.js"></script>
+
+    <!-- Isotope  -->
+    <script src="../../../assets/profile/vendors/isotope/isotope.pkgd.js"></script>
+    
+    <!-- Google mpas -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script>
+
+    <!-- JohnDoe js -->
+    <script src="../../../assets/profile/js/johndoe.js"></script>
+
+</body>
+</html>
+

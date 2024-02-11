@@ -1,0 +1,13 @@
+
+  
+  .search-input {
+    padding-left: 40px; /* Adjust this value depending on the size of your icon */
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 10px; /* Adjust this value to move the icon left or right */
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  

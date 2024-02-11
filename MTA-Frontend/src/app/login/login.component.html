@@ -1,0 +1,87 @@
+<app-navbar></app-navbar>
+
+<div id="contact" class="contact-us section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3">
+        <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
+          <h4>Please <em>Login</em></h4>
+          <div class="line-dec"></div>
+        </div>
+      </div>
+
+      <div class="col-lg-8 offset-lg-2 wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.25s">
+        @if(error!=""){
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div class="col-lg-8 offset-lg-2 wow fadeInUp"></div>
+          <strong>{{ error }}!</strong>
+        </div>
+        }
+        <form id="contact" [formGroup]="loginForm" (submit)="loginCheck()" autocomplete="on" method="post"
+          class="was-validated">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="contact-dec">
+                <img src="assets/images/services-left-dec.jpg" alt="" />
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div id="map">
+                <img src="assets/images/login_logo.png" width="50%" height="300px" frameborder="0" style="margin: 50px"
+                  alt="" />
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="fill-form">
+                <div class="row">
+                  <div class="col-lg-9">
+                    <fieldset>
+                      <input class="form-control is-valid" type="email" name="email" id="email" placeholder="Username"
+                        formControlName="email" autocomplete="on" required />
+                      <div class="invalid-feedback">
+                        Please enter the username.
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <input class="form-control is-valid" type="text" name="password" id="password" autocomplete="on"
+                        placeholder="Password" formControlName="password" required />
+                      <div class="invalid-feedback">
+                        Please enter the password.
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <!-- Your component template -->
+                      <select class="form-select" id="role" formControlName="role" required>
+                        <option disabled selected hidden>
+                          <em><i>Role</i></em>
+                        </option>
+                        <option value="User">User</option>
+                        <option value="Admin">Admin</option>
+                      </select>
+                    </fieldset>
+                  </div>
+                  <div class="col-sm-5">
+                    <br />
+                    <fieldset>
+                      <a href="#" id="forget" class="main-button">
+                        Forget password ? 
+                      </a>
+                      
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-4 offset-lg-1">
+                    <fieldset>
+                      <button type="submit" id="form-submit"  [disabled]="loginForm.invalid" class="main-button">
+                        Login
+                      </button>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
