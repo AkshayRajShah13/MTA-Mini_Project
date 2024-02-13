@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development .">
     <meta name="author" content="Devcrud">
+    <meta http-equiv="Cache-Control" content="no-store" />
     <title>{{user.firstName}} page</title>
     <!-- font icons -->
     <link rel="stylesheet" href="../../../assets/profile/vendors/themify-icons/css/themify-icons.css">
@@ -86,76 +87,17 @@
                         <li><span>Phone</span> : + (91) {{user.mobile}}</li>
                         <li><span>Address</span> :  {{user.currentLocation}},{{user.country}}</li>
                     }
+                    @if(action === 'edit'){
+                        <button type="button"  (click)="getUser()" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenter1" >
+                           Edit Profile
+                         </button> 
+                        }
                 </ul>
-                <button class="btn btn-outline-danger" (click)="submitted=true"><i class="icon-down-circled2 "></i>Edit Profile</button>
+                <!-- <button class="btn btn-outline-danger" ><i class="icon-down-circled2 "></i>Edit Profile</button>
+                 -->
             }
 
-                @if(submitted)
-                {  
-                <h3 class="font-weight-light">Personal Info</h3>
-                <span class="line mb-5"></span>
-                <ul class="mt40 info list-unstyled">
-
-                <form [formGroup]="editProfileForm"  class="was-validated" (submit)="onSubmit()"  autocomplete="on" method="POST">
-                    <fieldset disabled>
-                    <div class="form-group" >
-                        <li><span>User Id</span> : </li>
-                       <input type="text" class="form-control"  required  formControlName="userId">
-                    </div>
-                </fieldset>
-                    <div class="form-group">
-                        <li><span>first Name</span> : </li>
-                       <input type="text" class="form-control" required formControlName="firstName">
-                    </div>
-                    <div class="form-group">
-                        <li><span>Middle Name</span> : </li>
-                       <input type="text" class="form-control"  formControlName="middleName">
-                    </div>
-                    <div class="form-group">
-                        <li><span>Last Name</span> : </li>
-                       <input type="text" class="form-control" required formControlName="lastName">
-                    </div>
-                    <div class="form-group">
-                        <li><span>Email</span> : </li> 
-                       <input type="email" class="form-control"  required formControlName="email">
-                    </div>
-                    <div class="form-group">
-                        <li><span>password</span> : </li> 
-                       <input type="text" class="form-control form-control is-valid"  placeholder="Enter your password" required formControlName="password">
-                       <div class="invalid-feedback">Please enter the Password.</div>
-                     
-                    </div>
-
-                    <div class="form-group">
-                        <li><span>Birthdate</span> : </li>
-                       <input type="text" class="form-control" required formControlName="dob" >
-                    </div>
-                    <div class="form-group">
-                       <li><span>Gender</span> : </li>
-                       <input type="text" class="form-control"  required formControlName="gender">
-                    </div>
-                    <div class="form-group">
-                        <li><span>Country</span> : </li>
-                       <input type="text" class="form-control"  required  formControlName="country">
-                    </div>
-                    <div class="form-group">
-                        <li><span>Current Location</span> : </li>
-                       <input type="text" class="form-control" required formControlName="currentLocation">
-                    </div>
-                    <div class="form-group">
-                        <li><span>Prefered Location</span> : </li>
-                       <input type="text" class="form-control" required formControlName="prefered_location">
-                    </div>
-                    <div class="form-group">
-                        <li><span>Mobile</span> : 
-                       <input type="number" class="form-control" required formControlName="mobile"></li>
-                    </div>
-                    <button type="submit"  [disabled]="editProfileForm.invalid" class="btn btn-primary">Update</button>
-                   </form>
-
-                </ul>
-            }
-
+    
                 <ul class="social-icons pt-3">
                     <li class="social-item"><a class="social-link" href="#"><i class="ti-facebook" aria-hidden="true"></i></a></li>
                     <li class="social-item"><a class="social-link" href="#"><i class="ti-twitter" aria-hidden="true"></i></a></li>
@@ -197,6 +139,99 @@
 }@else {
     <h1>User not accessible....</h1>
 }
+<!-- Edit Modal  -->
+
+ <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        
+          <div class="col-lg-6 offset-lg-5">
+            <div class="section-heading wow fadeIn" data-wow-duration="0.5s" data-wow-delay="0.1s">
+              <h4>User <em> Profile</em></h4>
+              <div class="line-dec"></div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="modal-body">
+
+        <div id="Update">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 wow fadeInUp" data-wow-duration="0.5s" data-wow-delay="0.25s">
+              
+                 <form  [formGroup]="editProfileForm"  class="was-validated"  autocomplete="on">
+        <fieldset disabled>
+        <div class="form-group" >
+            <li><span>User Id</span> : </li>
+           <input type="text" class="form-control"   required formControlName="userId">
+        </div>
+      </fieldset>
+        <div class="form-group">
+            <li><span>first Name</span> : </li>
+           <input type="text" class="form-control" required formControlName="firstName">
+        </div>
+        <div class="form-group">
+            <li><span>Middle Name</span> : </li>
+           <input type="text" class="form-control"  formControlName="middleName">
+        </div>
+        <div class="form-group">
+            <li><span>Last Name</span> : </li>
+           <input type="text" class="form-control" required formControlName="lastName">
+        </div>
+        <div class="form-group">
+            <li><span>Email</span> : </li> 
+           <input type="email" class="form-control" required  formControlName="email">
+        </div>
+      
+
+        <div class="form-group">
+            <li><span>Birthdate</span> : </li>
+           <input type="text" class="form-control" required formControlName="dob" >
+        </div>
+        <div class="form-group">
+           <li><span>Gender</span> : </li>
+           <input type="text" class="form-control" required  formControlName="gender">
+        </div>
+        <div class="form-group">
+            <li><span>Country</span> : </li>
+           <input type="text" class="form-control" required   formControlName="country">
+        </div>
+        <div class="form-group">
+            <li><span>Current Location</span> : </li>
+           <input type="text" class="form-control" required formControlName="currentLocation">
+        </div>
+        <div class="form-group">
+            <li><span>Prefered Location</span> : </li>
+           <input type="text" class="form-control"  formControlName="prefered_location">
+        </div>
+        <div class="form-group">
+            <li><span>Mobile</span> : 
+           <input type="number" class="form-control" required formControlName="mobile"></li>
+        </div>
+      
+      </form> 
+  
+               
+               
+               
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-success" [disabled]="editProfileForm.invalid" (click)="update()">
+          update
+        </button>
+      </div>
+    </div>
+  </div>
+</div> 
+
     <app-footer></app-footer>
 
 

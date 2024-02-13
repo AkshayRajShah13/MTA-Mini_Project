@@ -53,6 +53,17 @@ export class ApiCallService {
     }
   }
 
+  // get Profile Object..
+  getObjectProfile(): any | null {
+    try {
+      const usr = localStorage.getItem('userProfile');
+      return usr ? JSON.parse(usr) : null;
+    } catch (error) {
+      console.error('Error retrieving object from localStorage:', error);
+      return null;
+    }
+  }
+
   // for login user...
   loginUser(token: any){
     return true;

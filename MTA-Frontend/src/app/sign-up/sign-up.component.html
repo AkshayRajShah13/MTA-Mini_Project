@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-lg-6 offset-lg-3">
           <div class="section-heading wow fadeIn" data-wow-duration="1s" data-wow-delay="0.5s">
-            <h4>Please <em>Sign-Up</em></h4>
+            <h4>Add <em>Candidate</em></h4>
             <div class="line-dec"></div>
           </div>
         </div>
@@ -15,7 +15,7 @@
               <strong>{{ error }}!</strong>
             </div>
             }
-          <form id="contact" (submit)="signUp()" method="post" [formGroup]="signUpForm">
+          <form id="contact" class="was-validated" (submit)="signUp()" method="post" [formGroup]="signUpForm">
             <div class="row">
               <div class="col-lg-12">
                 <div class="contact-dec">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-lg-6">
                         <input type="text" class="form-control"name="lastName" formControlName="lastName" placeholder="Last Name" autocomplete="on" required />
-                        <input type="text" class="form-control" name="password"  formControlName="password" placeholder="password" autocomplete="on" required />
+                        <!-- <input type="text" class="form-control" name="password"  formControlName="password" placeholder="password" autocomplete="on" required /> -->
                         <input type="number" class="form-control" name="mobile" formControlName="mobile" placeholder="Mobile No." autocomplete="on" required />
                          <!-- Your component template -->
                          <select class="form-select" id="gender" formControlName="gender" required>
@@ -54,8 +54,8 @@
                     </div>
                     <div class="col-lg-12">
                       <fieldset>
-                        <button type="submit" id="form-submit" class="main-button">
-                          Sign Up
+                        <button type="submit" id="form-submit" class="main-button" [disabled]="signUpForm.invalid">
+                          Add Candidate
                         </button>
                       </fieldset>
                     </div>

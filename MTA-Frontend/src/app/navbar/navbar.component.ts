@@ -20,14 +20,18 @@ export class NavbarComponent implements OnInit{
   
     user= this.login.getObject();
     // console.log("role navbar : ",this.role);
+    name!:string 
     
     ngOnInit(): void {
       this.loggedIn = this.login.isLogin();
+      // this.name =this.user.firstName 
       // console.log("navbar ",this.loggedIn);
     }
     
     getRole(){
       this.role = this.user.authorities[0].authority
+      // console.log(this.user.email);
+      
           return this.role;
    }
 

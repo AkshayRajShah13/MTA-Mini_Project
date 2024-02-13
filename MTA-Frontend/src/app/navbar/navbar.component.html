@@ -14,6 +14,7 @@
               
               @if(loggedIn){
                 @if(getRole()=="Admin"){
+                  <li class="scroll-to-section" [routerLink]= "'/signUp'"><a > Add Candidate</a></li>
                   <li class="nav-item search-bar">
                     <form class="form-inline" >
                       <div class="input-group">
@@ -22,8 +23,8 @@
                       </div>
                     </form>
                   </li>
-                <li class="scroll-to-section" (click)="usersDetails()"><a >users</a></li>
-                <li class="scroll-to-section" ><a >Admin</a></li>
+                <!-- <li class="scroll-to-section" (click)="usersDetails()"><a >Details</a></li> -->
+                <li class="scroll-to-section" ><a >{{this.user.email}} (Admin)</a></li>
                 }
                 <li class="scroll-to-section"><div class="border-first-button"><a  (click)="logoutUser()" >Logout</a></div></li> 
               }@else{

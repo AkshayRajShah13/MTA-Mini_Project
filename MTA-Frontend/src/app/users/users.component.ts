@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ApiCallService } from '../Services/api-call.service';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SharedService } from '../Services/shared-service.service';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [NavbarComponent,ReactiveFormsModule,CommonModule],
+  imports: [NavbarComponent,ReactiveFormsModule,CommonModule,RouterModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -28,8 +29,10 @@ export class UsersComponent implements OnInit{
     mobile: new FormControl(''),
     prefered_location:  new FormControl('')
  })
+
+
  
-  constructor(private router: Router,private api:ApiCallService){
+  constructor(private sharedService: SharedService,private router: Router,private api:ApiCallService){
     
   }
   
@@ -38,8 +41,10 @@ export class UsersComponent implements OnInit{
   users: any;
   filterUsers :any
 
+  
   // fetch users on loading the page...
   ngOnInit(): void {
+    
     this.api.getAllUsers().subscribe({
       next:data =>{
         // console.log(data); 
@@ -51,8 +56,9 @@ export class UsersComponent implements OnInit{
         console.log(error);
       }
     })
-  }
-
+    
+   
+    }
 
   // delete user 
   delUser(id:number){
@@ -76,54 +82,21 @@ export class UsersComponent implements OnInit{
   }
 
   // get user...
-  getUser(id:number){
+  getUser(id:number,text:string){
     this.api.getUserById(id).subscribe({
       next:(data: any) =>{  
         // console.log(data);
-        this.editProfileForm.patchValue({
-          userId:data.userId,
-          mobile : data.mobile,
-          firstName: data.firstName,
-          lastName : data.lastName,
-          middleName : data.middleName,
-          email : data.email,
-          gender : data.gender,
-          currentLocation : data.currentLocation,
-          country : data.country,
-          prefered_location : data.prefered_location,
-          dob : data.dob,
-          // password : data.password
-        })
-         this.usr = data;
-        
+        // this.router.navigate(["'userProfile'"])
+      
+        this.sharedService.changeUser(data,text); // Use shared service to change the user
+        // this.router.navigate(["userProfile"]);
+
       }, 
       error:(error:any)=>{
         console.log(error);
       }
     })
   }
-
-  
-  // update user Profile
-  update(){
-    // let user = this.users.find((user:any) => user.userId == this.usr.userId)
-    // console.log(user);
-
-    this.api.updateUser(this.editProfileForm.value)
-    .subscribe({
-        next:() =>{
-            alert('User profile updated successfully');
-            window.location.reload()
-          }, 
-          error:(error:any)=>{
-            console.log(error);
-            alert('user updation failed...');
-            // window.location.reload()
-          }
-    })
-  
-        }
-  
 
   // search box...
   searchUser(data:any){

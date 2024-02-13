@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
-import { FormControl, FormGroup,ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup,ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiCallService } from '../Services/api-call.service';
 import { Router } from '@angular/router';
 
@@ -14,14 +14,13 @@ import { Router } from '@angular/router';
 export class SignUpComponent {
 
     signUpForm:FormGroup = new FormGroup({
-        firstName: new FormControl(''),
-        lastName: new FormControl(''),
-        email: new FormControl(''),
-        password: new FormControl(''),
-        dob: new FormControl(''),
-        gender: new FormControl('Gender'),
-        country: new FormControl(''),
-        mobile: new FormControl(''),
+        firstName: new FormControl('',Validators.required),
+        lastName: new FormControl('',Validators.required),
+        email: new FormControl('',Validators.required),
+        dob: new FormControl('',Validators.required),
+        gender: new FormControl('Gender',Validators.required),
+        country: new FormControl('',Validators.required),
+        mobile: new FormControl('',Validators.required),
     })
 
     user:any
@@ -35,10 +34,10 @@ export class SignUpComponent {
                 alert('User Created successfully');
                 // localStorage.setItem("token",data.token);  
                 // localStorage.setItem("user",JSON.stringify(data.user));  
-                this.router.navigate(["/login"])
+                this.router.navigate(["/users"])
               }, 
               error:()=>{
-                this.error = 'Something Wrong....';
+                this.error = 'User Already existed....';
               }
         })
     }

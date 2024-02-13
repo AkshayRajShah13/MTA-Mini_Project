@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiCallService } from '../Services/api-call.service';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
     styleUrl: './login.component.css',
     imports: [NavbarComponent,ReactiveFormsModule]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     loginForm = new FormGroup({
         email: new FormControl('', Validators.required),
         password: new FormControl('', Validators.required),
@@ -20,6 +20,11 @@ export class LoginComponent {
 
     user:any
     constructor(private api:ApiCallService, private router:Router){}
+    
+    ngOnInit(): void {
+        this.api.logout();
+    }
+
 
     error:string=""
     loginCheck(){
@@ -35,7 +40,7 @@ export class LoginComponent {
                 // console.log(this.user.token); 
                 localStorage.setItem("token",data.token);  
                 localStorage.setItem("user",JSON.stringify(data.user));  
-                this.router.navigate(["/userProfile"])
+                this.router.navigate(["/users"])
               }, 
               error:()=>{
                 this.error = 'Invalid username or password....';
